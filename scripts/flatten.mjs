@@ -36,6 +36,30 @@ const PAGES = [
 
 const ASSET_EXT = /\.(css|js|mjs|png|jpe?g|webp|gif|svg|ico|woff2?|ttf|eot|mp4|webm)$/i;
 
+// Live page path -> local file. Internal navigation is rewritten through this
+// so the mirror is self-contained. A path not listed here is left pointing at
+// the live site rather than guessed at.
+const PAGE_LINKS = {
+  '/': 'index.html',
+  '/commercial-printing/': 'commercial-printing.html',
+  '/promotional-products/': 'promotional-products.html',
+  '/branded-apparel/': 'branded-apparel.html',
+  '/design-2/': 'design-2.html',
+  '/casestudies/': 'casestudies.html',
+  '/gallery/': 'gallery.html',
+  '/upload-art/': 'upload-art.html',
+  '/request-a-quote/': 'request-a-quote.html',
+};
+
+function toLocalPage(url) {
+  let u = url.trim().replace(/^["']|["']$/g, '');
+  const m = u.match(/^(?:https?:)?\/\/(?:www\.)?becreativetx\.com(\/[^"'#?]*)?/i);
+  if (!m) return null;
+  let path = m[1] || '/';
+  if (!path.endsWith('/') && !path.includes('.')) path += '/';
+  return PAGE_LINKS[path] || null;
+}
+
 // Lines the live install needs but a static mirror does not. Matched against
 // whole <link>/<script>/<meta> tags and removed.
 const CRUFT = [
@@ -91,10 +115,14 @@ async function flattenPage(srcFile, outFile) {
   const found = new Set();
 
   html = html.replace(refRe, (m, attr, q, val) => {
-    const local = toLocalPath(val);
-    if (!local) return m;
-    found.add(local);
-    return `${attr}=${q}assets/${local}${q}`;
+    const asset = toLocalPath(val);
+    if (asset) { found.add(asset); return `${attr}=${q}assets/${asset}${q}`; }
+    // Not an asset: is it an internal page link?
+    if (attr.toLowerCase() === 'href') {
+      const page = toLocalPage(val);
+      if (page) return `${attr}=${q}${page}${q}`;
+    }
+    return m;
   });
 
   // srcset needs per-URL handling.
@@ -124,6 +152,17 @@ async function flattenPage(srcFile, outFile) {
     found.add(local);
     return `assets/${local}`;
   });
+
+  // Page links inside runtime config (e.g. the Slider Revolution JSON) carry
+  // escaped slashes and never appear as href attributes. Replace the known
+  // full page URLs in both plain and JSON-escaped form. Only exact PAGE_LINKS
+  // targets are touched, so mailto: and live-only endpoints are safe.
+  for (const [path, file] of Object.entries(PAGE_LINKS)) {
+    if (path === '/') continue; // too broad to string-replace safely
+    const live = `https://becreativetx.com${path}`;
+    html = html.split(live).join(file);
+    html = html.split(live.replace(/\//g, '\\/')).join(file);
+  }
 
   let ok = 0;
   for (const local of found) {
