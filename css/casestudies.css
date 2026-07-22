@@ -15,21 +15,29 @@
   cursor: pointer;
   display: block;
   width: 100%;
-  transition: transform 200ms ease, opacity 200ms ease;
+  transition: transform 200ms ease, filter 200ms ease;
 }
 
-.cs-logo-btn:hover { transform: translateY(-3px); }
+/* Lift and glow on hover. filter/drop-shadow tracks the logo's own shape, so
+   the glow reads on the transparent-background marks rather than a box. */
+.cs-logo-btn:hover,
+.cs-logo-btn:focus-visible {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.28)) brightness(1.06);
+}
+
 .cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
 
 /* A quiet "View work" cue under each logo, revealed on hover/focus. */
 .cs-logo-cue {
   display: block;
-  margin-top: 10px;
+  margin-top: 12px;
   font-family: "Open Sans", Arial, sans-serif;
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.6);
   opacity: 0;
   transition: opacity 200ms ease;
 }
