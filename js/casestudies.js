@@ -46,20 +46,24 @@
   overlay.hidden = true;
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
+  // A panel floating over a dimmed backdrop (the page stays visible behind),
+  // rather than a full-screen takeover that reads like a new page.
   overlay.innerHTML =
-    '<div class="cs-ov-bar">' +
-      '<h2 class="cs-ov-title"></h2>' +
-      '<button type="button" class="cs-ov-btn" data-act="close">Close</button>' +
-    '</div>' +
-    '<div class="cs-ov-body">' +
-      '<div class="cs-ov-grid-wrap"><ul class="cs-ov-grid"></ul></div>' +
-      '<div class="cs-ov-zoom" hidden>' +
-        '<div><button type="button" class="cs-ov-btn" data-act="back">Back</button></div>' +
-        '<figure class="cs-zoom-figure"><img alt=""><figcaption></figcaption></figure>' +
-        '<div class="cs-zoom-nav">' +
-          '<button type="button" class="cs-ov-btn" data-act="prev">Previous</button>' +
-          '<span class="cs-zoom-pos"></span>' +
-          '<button type="button" class="cs-ov-btn" data-act="next">Next</button>' +
+    '<div class="cs-ov-panel">' +
+      '<div class="cs-ov-bar">' +
+        '<h2 class="cs-ov-title"></h2>' +
+        '<button type="button" class="cs-ov-btn" data-act="close" aria-label="Close">Close</button>' +
+      '</div>' +
+      '<div class="cs-ov-body">' +
+        '<div class="cs-ov-grid-wrap"><ul class="cs-ov-grid"></ul></div>' +
+        '<div class="cs-ov-zoom" hidden>' +
+          '<div><button type="button" class="cs-ov-btn" data-act="back">Back</button></div>' +
+          '<figure class="cs-zoom-figure"><img alt=""><figcaption></figcaption></figure>' +
+          '<div class="cs-zoom-nav">' +
+            '<button type="button" class="cs-ov-btn" data-act="prev">Previous</button>' +
+            '<span class="cs-zoom-pos"></span>' +
+            '<button type="button" class="cs-ov-btn" data-act="next">Next</button>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -127,6 +131,8 @@
   }
 
   overlay.addEventListener('click', function (e) {
+    // Clicking the dimmed backdrop (outside the panel) closes the pop-out.
+    if (e.target === overlay) { closeOverlay(); return; }
     var act = e.target.getAttribute && e.target.getAttribute('data-act');
     if (act === 'close') closeOverlay();
     else if (act === 'back') showGrid();
