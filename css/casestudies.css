@@ -23,7 +23,7 @@
 .cs-logo-btn:hover,
 .cs-logo-btn:focus-visible {
   transform: translateY(-3px);
-  filter: drop-shadow(0 0 11px rgba(200, 40, 40, 0.45)) brightness(1.04);
+  filter: drop-shadow(0 0 13px rgba(200, 40, 40, 0.54)) brightness(1.04);
 }
 
 .cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
