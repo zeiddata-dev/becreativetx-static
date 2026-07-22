@@ -1,19 +1,16 @@
-// Convert dropped product photos into web-ready gallery images.
+// Convert dropped product photos into web-ready gallery images, per client.
 //
-// Reads product-images/<category>/, where <category> is one of print, promo,
-// apparel, design. Writes two WebP sizes per photo into the live gallery:
-//   assets/gallery/thumb/  800px wide  - grid tiles
-//   assets/gallery/full/  1800px wide  - lightbox view
+// Reads product-images/<client>/, where <client> is one of the four case
+// studies. Writes two WebP sizes per photo into the gallery:
+//   assets/gallery/thumb/  800px wide  - overlay grid
+//   assets/gallery/full/  1800px wide  - overlay zoom view
 //
-// Filename convention (optional but recommended):
-//   "Client Name - short description.jpg"
-//     client  = "Client Name"
-//     alt     = "short description"
-//   A name without " - " leaves the client blank and uses the whole name as alt.
+// The folder decides the client. The filename becomes the product's alt text,
+// so name each file for what it shows, e.g. "printed stadium cups.jpg".
 //
-// After converting, it prints catalogue entries ready to paste into
-// js/gallery-data.js. It never edits that file itself, so the wording stays
-// under human control. Then run scripts/build-gallery-html.mjs to lay tiles.
+// After converting, it prints product entries grouped by client, ready to
+// paste into the matching `products` array in js/casestudies-data.js. It never
+// edits that file itself, so wording stays under human control.
 //
 // Run: node scripts/build-gallery-images.mjs
 
@@ -23,7 +20,14 @@ import sharp from 'sharp';
 
 const SRC = 'product-images';
 const OUT = 'assets/gallery';
-const CATEGORIES = ['print', 'promo', 'apparel', 'design'];
+
+// Folder -> display name. Matches the four logos on the case-studies page.
+const CLIENTS = {
+  unitron: 'Unitron Power Systems',
+  momentum: 'Momentum Spine & Joint',
+  allen: 'City of Allen',
+  'box-insurance': 'Box Insurance Agency',
+};
 
 const SIZES = [
   { dir: 'thumb', width: 800, quality: 78 },
@@ -32,19 +36,17 @@ const SIZES = [
 
 const SOURCE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp']);
 
-function slug(file) {
-  return basename(file, extname(file))
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+function slug(file, key) {
+  const base = basename(file, extname(file)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  // Prefix with the client key so ids stay unique across folders.
+  return `${key}-${base}`;
 }
 
-// "Client - description.jpg" -> { client, alt }
-function parseName(file) {
+function altFromName(file) {
   const stem = basename(file, extname(file));
   const dash = stem.indexOf(' - ');
-  if (dash === -1) return { client: '', alt: stem };
-  return { client: stem.slice(0, dash).trim(), alt: stem.slice(dash + 3).trim() };
+  const desc = dash === -1 ? stem : stem.slice(dash + 3);
+  return desc.trim();
 }
 
 async function listImages(dir) {
@@ -59,17 +61,16 @@ async function main() {
   for (const { dir } of SIZES) await mkdir(join(OUT, dir), { recursive: true });
 
   const rows = [];
-  const entries = [];
-  const perCat = {};
+  const byClient = {};
+  let total = 0;
 
-  for (const cat of CATEGORIES) {
-    const dir = join(SRC, cat);
-    const files = await listImages(dir);
-    perCat[cat] = files.length;
+  for (const [key, name] of Object.entries(CLIENTS)) {
+    const files = await listImages(join(SRC, key));
+    byClient[key] = { name, entries: [] };
 
     for (const file of files) {
-      const id = slug(file);
-      const src = join(dir, file);
+      const id = slug(file, key);
+      const src = join(SRC, key, file);
       const meta = await sharp(src).metadata();
 
       for (const { dir: sz, width, quality } of SIZES) {
@@ -79,30 +80,31 @@ async function main() {
       }
 
       const thumbKB = Math.round((await stat(join(OUT, 'thumb', `${id}.webp`))).size / 1024);
-      const { client, alt } = parseName(file);
-      rows.push({ id, cat, thumbKB, over: thumbKB > 400 ? 'YES' : '' });
-      entries.push(`  { id: '${id}', cat: '${cat}', client: ${JSON.stringify(client)}, alt: ${JSON.stringify(alt || 'PLACEHOLDER — describe the piece')} },`);
+      const alt = altFromName(file) || 'PLACEHOLDER — describe the piece';
+      rows.push({ client: key, id, thumbKB, over: thumbKB > 400 ? 'YES' : '' });
+      byClient[key].entries.push(`      { id: '${id}', alt: ${JSON.stringify(alt)} },`);
+      total++;
     }
   }
 
-  const total = rows.length;
-
   if (total === 0) {
-    console.log('No images found under product-images/<category>/.');
-    console.log('Drop photos into product-images/promo, /print, /apparel, or /design and re-run.');
+    console.log('No images found under product-images/<client>/.');
+    console.log('Drop photos into product-images/{unitron,momentum,allen,box-insurance} and re-run.');
     return;
   }
 
   console.table(rows);
-  console.log('\nby category:', CATEGORIES.map((c) => `${c} ${perCat[c]}`).join('   '));
-
   const over = rows.filter((r) => r.over);
   console.log(`converted   ${total}`);
   console.log(`OVER 400KB  ${over.length}${over.length ? ': ' + over.map((r) => r.id).join(', ') : ''}`);
 
-  console.log('\n--- paste into js/gallery-data.js (review client + alt first) ---');
-  console.log(entries.join('\n'));
-  console.log('--- end ---');
+  console.log('\n--- paste each block into the matching client\'s products in js/casestudies-data.js ---');
+  for (const [key, { name, entries }] of Object.entries(byClient)) {
+    if (!entries.length) continue;
+    console.log(`\n// ${name} (${key})`);
+    console.log(entries.join('\n'));
+  }
+  console.log('\n--- end ---');
   console.log(over.length === 0 ? 'RESULT=PASS' : 'RESULT=CHECK');
 }
 

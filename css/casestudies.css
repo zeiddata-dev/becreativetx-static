@@ -1,0 +1,179 @@
+/* casestudies.css
+   Per-client product overlay for the case-studies page.
+
+   The page keeps its four client logos (from the live site). This makes each
+   logo a clear button and adds a full-screen overlay that shows just that
+   client's products, then a single-image view with prev/next. Scoped values,
+   matched to the live look (white, Open Sans, quiet). */
+
+/* ---------- logo affordance ---------- */
+
+.cs-logo-btn {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.cs-logo-btn:hover { transform: translateY(-3px); }
+.cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
+
+/* A quiet "View work" cue under each logo, revealed on hover/focus. */
+.cs-logo-cue {
+  display: block;
+  margin-top: 10px;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cs-logo-btn:hover .cs-logo-cue,
+.cs-logo-btn:focus-visible .cs-logo-cue { opacity: 1; }
+
+/* ---------- overlay shell ---------- */
+
+.cs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #ffffff;
+  font-family: "Open Sans", Arial, sans-serif;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 22px clamp(16px, 5vw, 56px) 40px;
+  overflow-y: auto;
+}
+
+.cs-overlay[hidden] { display: none; }
+
+.cs-ov-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.cs-ov-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111;
+}
+
+.cs-ov-btn {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  padding: 12px 4px;
+  min-height: 44px;
+}
+
+.cs-ov-btn:hover { color: #111; }
+
+/* ---------- grid view ---------- */
+
+.cs-ov-grid {
+  list-style: none;
+  margin: 32px auto 0;
+  padding: 0;
+  max-width: 1100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px 30px;
+}
+
+@media (max-width: 820px) { .cs-ov-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; } }
+@media (max-width: 480px) { .cs-ov-grid { grid-template-columns: 1fr; } }
+
+.cs-ov-grid li { margin: 0; }
+
+.cs-tile {
+  border: 0;
+  background: none;
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cs-tile .frame {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.cs-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 300ms ease;
+}
+
+.cs-tile:hover img { transform: scale(1.03); }
+
+/* ---------- single-image (zoom) view ---------- */
+
+.cs-ov-zoom {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  height: 100%;
+}
+
+.cs-ov-zoom[hidden] { display: none; }
+.cs-ov-grid-wrap[hidden] { display: none; }
+
+.cs-zoom-figure {
+  margin: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 16px;
+  justify-items: center;
+}
+
+.cs-zoom-figure img {
+  max-width: 100%;
+  max-height: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.cs-zoom-figure figcaption {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  max-width: 60ch;
+}
+
+.cs-zoom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cs-zoom-pos { font-size: 12px; color: rgba(0, 0, 0, 0.6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-logo-btn, .cs-logo-cue, .cs-tile img { transition: none; }
+  .cs-logo-btn:hover { transform: none; }
+  .cs-tile:hover img { transform: none; }
+}
