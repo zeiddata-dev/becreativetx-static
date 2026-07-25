@@ -1,0 +1,36 @@
+/* home.css
+   Small home-page tweaks. Currently: the "Case Studies" link, enlarged into an
+   obvious, clickable call-to-action with an arrow. Matched to the site look
+   (Poppins, red accent). No motion. */
+
+.home-cs-cta {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.home-cs-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Poppins", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, 3.4vw, 34px);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.home-cs-cta a .arrow {
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.home-cs-cta a:hover,
+.home-cs-cta a:focus-visible {
+  color: rgb(200, 40, 40);
+  border-bottom-color: rgb(200, 40, 40);
+}
