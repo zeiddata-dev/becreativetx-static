@@ -3,6 +3,7 @@ node_modules/
 Thumbs.db
 *.stackdump
 .idea/
+.claude/launch.json
 
 # Delivery archives dropped into intake folders (individual images are tracked)
 product-images/**/*.zip

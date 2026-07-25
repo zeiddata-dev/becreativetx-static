@@ -88,7 +88,13 @@ end-to-end. See `product-images/README.md` and `product-images/general/README.md
 
 1. **Build the `/gallery/` page** (filter by type, all products). Note
    `general/apparel` and `general/promo` are empty, so those filters start bare.
-2. Add apparel + promo photos to `product-images/general/{apparel,promo}/`.
+   **REMINDER (2026-07-25): revisit apparel + promo after the full gallery
+   build.** On the live site the Apparel section is NOT a product grid — it is
+   just two links (see https://becreativetx.com/branded-apparel/). So the
+   gallery's Apparel filter likely wants those two links, not a photo wall.
+   Leaving both empty for now by decision.
+2. Add apparel + promo photos to `product-images/general/{apparel,promo}/`
+   (only if the gallery design ends up wanting a promo/apparel grid).
 3. 6 `/portfolio/` detail pages not mirrored (not in crawl; flatten same way
    after fetching).
 4. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
