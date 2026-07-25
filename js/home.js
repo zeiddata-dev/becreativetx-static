@@ -45,6 +45,9 @@
     try { if (window.jQuery && window.jQuery(host).data('flickity')) window.jQuery(host).flickity('destroy'); } catch (e) {}
 
     host.classList.add('tm-host');
+    // Drop the hook class the theme's slider keys on, so a late Flickity init
+    // cannot grab this node and re-stack the quotes.
+    host.classList.remove('testimonial_slider');
     // Two copies back to back give a seamless loop.
     host.innerHTML = '<div class="tm-scroller"><div class="tm-track">' + setHtml + setHtml + '</div></div>';
 
@@ -78,6 +81,13 @@
     requestAnimationFrame(tick);
   }
 
-  if (document.readyState === 'complete') init();
-  else window.addEventListener('load', init);
+  // Build as soon as the DOM is parsed (not on window 'load'), so the quotes
+  // never sit stacked while images finish loading. Also re-run on load as a
+  // safety net in case the theme slider initialised late.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  window.addEventListener('load', init);
 })();
