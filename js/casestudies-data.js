@@ -8,24 +8,22 @@
    logos on the page, not products in the gallery.
 
    Product ids match assets/gallery/{thumb,full}/<id>.webp. alt describes only
-   what the photo shows. Momentum, City of Allen, and Box Insurance point at the
-   reworked photography dropped into product-images/<key>/ and rebuilt via
-   scripts/build-gallery-images.mjs.
-
-   NOTE: Unitron still points at the original stand-in images. No reworked
-   Unitron photos have been delivered yet (product-images/unitron/ is empty).
-   Replace these three once the real photos arrive, then rebuild. */
+   what the photo shows. All four clients point at the reworked photography
+   dropped into product-images/<key>/ and rebuilt via
+   scripts/build-gallery-images.mjs. */
 
 window.CASE_STUDIES = [
   {
     key: 'unitron',
     name: 'Unitron Power Systems',
     logoMatch: 'UNITRON-PLAIN-DEBOSS',
-    // STAND-IN images — awaiting reworked Unitron photography.
     products: [
-      { id: 'img-1883', alt: 'White wall charger printed with the Unitron Power Systems logo.' },
-      { id: 'img-1885', alt: 'Swivel USB flash drive printed with the Unitron Power Systems logo.' },
-      { id: 'img-1887', alt: 'Two black microfiber pouches printed for Atlas Marine Systems and Unitron Power Systems.' },
+      { id: 'unitron-unitron-four-port-charger-hero', alt: 'Four-port USB wall charger branded for Unitron Power Systems.' },
+      { id: 'unitron-unitron-usb-drive-hero', alt: 'Swivel USB flash drive branded for Unitron Power Systems.' },
+      { id: 'unitron-unitron-keychain-tool-hero', alt: 'Multi-function keychain tool branded for Unitron Power Systems.' },
+      { id: 'unitron-unitron-zipper-pouch-hero', alt: 'Zippered accessory pouch branded for Unitron Power Systems.' },
+      { id: 'unitron-atlas-marine-usb-drive-hero', alt: 'Swivel USB flash drive branded for Atlas Marine Systems.' },
+      { id: 'unitron-atlas-marine-zipper-pouch-hero', alt: 'Zippered accessory pouch branded for Atlas Marine Systems.' },
     ],
   },
   {

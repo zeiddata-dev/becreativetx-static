@@ -1,6 +1,6 @@
 # be creative — project handoff
 
-Last updated 2026-07-22.
+Last updated 2026-07-25.
 
 ## What this is
 
@@ -8,7 +8,7 @@ A faithful static mirror of **becreativetx.com** with an upgraded case-studies
 experience. One live project: **`bctx-live/`**.
 
 - Remote: **github.com/zeiddata-dev/becreativetx-static** (private)
-- Synced at commit `d50384b`
+- Synced at commit `65379a6`
 - Run locally: `npx vite .` from `bctx-live/`, open a page (e.g. `casestudies.html`)
 
 ## How we got here (important context)
@@ -73,24 +73,25 @@ Pipeline: `node scripts/build-gallery-images.mjs` compresses photos to two WebP
 sizes and prints catalogue entries to paste into the data file. Proven
 end-to-end. See `product-images/README.md` and `product-images/general/README.md`.
 
-## Current status of uploads (2026-07-22)
+## Current status of uploads (2026-07-25)
 
-- momentum: 13 photos, allen: 12, box-insurance: 10 — **uncommitted on disk**
-- **unitron: 0 — empty.** Flag with client: missed, or coming in the other batch?
-- `general/` type folders: created, empty
-- The overlay data (`casestudies-data.js`) still points at the OLD stand-in
-  images, not these new reworked ones. Rewiring to the real photos is pending.
+- All four client folders committed and wired into the overlays: unitron 6,
+  momentum 12, allen 11, box-insurance 12. `casestudies-data.js` points at the
+  reworked photos for **all four** clients (no more stand-ins).
+- `general/design`: 6 photos, `general/print`: 16 photos — committed.
+- `general/apparel` and `general/promo`: still empty (`.gitkeep` only).
+- Both `product-images/` (source) and the built `assets/gallery/` (thumb+full
+  WebP) are committed. Rebuild `assets/gallery/` any time with
+  `node scripts/build-gallery-images.mjs`.
 
 ## Open items
 
-1. **Build the `/gallery/` page** (filter by type, all products).
-2. **Rewire case-study overlays** to the new reworked photos (currently
-   stand-ins). Run the image pipeline, regenerate `casestudies-data.js`.
-3. **Unitron images missing.**
-4. Commit + push the new product photos (they're untracked).
-5. `/gallery/` page + 6 `/portfolio/` detail pages not mirrored (not in crawl;
-   flatten same way after fetching).
-6. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
+1. **Build the `/gallery/` page** (filter by type, all products). Note
+   `general/apparel` and `general/promo` are empty, so those filters start bare.
+2. Add apparel + promo photos to `product-images/general/{apparel,promo}/`.
+3. 6 `/portfolio/` detail pages not mirrored (not in crawl; flatten same way
+   after fetching).
+4. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
    don't submit from the mirror. Separate wiring task.
 
 ## Parts bin (kept, not dead)

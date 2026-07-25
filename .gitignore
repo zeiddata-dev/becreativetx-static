@@ -2,6 +2,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.stackdump
+.idea/
 
 # Delivery archives dropped into intake folders (individual images are tracked)
 product-images/**/*.zip
