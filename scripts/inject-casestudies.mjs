@@ -37,6 +37,14 @@ for (const src of BODY_SCRIPTS) {
   }
 }
 
+// A quiet text link to the full gallery, placed just below the four logos.
+if ($('.cs-see-more').length === 0) {
+  const row = logos.first().closest('.wpb_row');
+  const link = '<div class="cs-see-more"><a href="gallery.html">See more in the gallery</a></div>';
+  if (row.length) row.after(link);
+  else $('body').append(link);
+}
+
 await writeFile(PAGE, $.html(), 'utf8');
 
 console.log('logos found:', logos.length);
