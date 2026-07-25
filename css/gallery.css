@@ -1,0 +1,233 @@
+/* gallery.css
+   The /gallery/ page: a filterable grid of all be creative work.
+
+   Matched to the live look (white, quiet, Open Sans body with Poppins
+   headings). The single-image zoom reuses the case-studies overlay classes
+   (cs-overlay / cs-ov-zoom / cs-zoom-*), so casestudies.css is loaded too and
+   this file only styles the page: intro, filter bar, grid, and the apparel
+   links panel. */
+
+:root {
+  --gal-ink: #111;
+  --gal-muted: rgba(0, 0, 0, 0.6);
+  --gal-line: rgba(0, 0, 0, 0.14);
+  --gal-red: rgb(200, 40, 40);
+  --gal-frame: #fafafa;
+}
+
+.gal-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(40px, 7vw, 96px) clamp(16px, 4vw, 40px) clamp(64px, 9vw, 120px);
+  font-family: "Open Sans", Arial, sans-serif;
+  color: var(--gal-ink);
+}
+
+/* ---------- intro ---------- */
+
+.gal-intro { max-width: 640px; margin-bottom: clamp(28px, 4vw, 44px); }
+
+.gal-intro h1 {
+  font-family: "Poppins", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+
+/* A short red rule under the title, echoing the case-study logo glow accent. */
+.gal-intro h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 18px;
+  background: var(--gal-red);
+}
+
+.gal-intro p {
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.6;
+  color: var(--gal-muted);
+  margin: 0;
+}
+
+/* ---------- filter bar ---------- */
+
+.gal-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: clamp(28px, 4vw, 40px);
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--gal-line);
+}
+
+.gal-chip {
+  border: 1px solid var(--gal-line);
+  background: none;
+  color: var(--gal-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 11px 20px;
+  min-height: 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.gal-chip:hover { color: var(--gal-ink); border-color: rgba(0, 0, 0, 0.35); }
+
+.gal-chip[aria-pressed="true"] {
+  background: var(--gal-red);
+  border-color: var(--gal-red);
+  color: #fff;
+}
+
+.gal-chip .gal-count {
+  font-weight: 400;
+  opacity: 0.7;
+  margin-left: 7px;
+}
+
+.gal-chip:focus-visible { outline: 2px solid var(--gal-ink); outline-offset: 3px; }
+
+/* ---------- grid ---------- */
+
+.gal-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 2.4vw, 32px);
+}
+
+/* display:grid above outranks the UA [hidden] rule, so hiding the grid needs
+   an explicit override (used when Apparel is active or a filter is empty). */
+.gal-grid[hidden] { display: none; }
+
+@media (max-width: 1000px) { .gal-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 680px) { .gal-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (max-width: 340px) { .gal-grid { grid-template-columns: 1fr; } }
+
+.gal-grid li { margin: 0; }
+
+/* A tile fades in when its filter selects it, staggered by index. */
+.gal-tile {
+  border: 0;
+  background: none;
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+  animation: gal-in 360ms ease both;
+}
+
+.gal-tile .frame {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: var(--gal-frame);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.gal-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 320ms ease;
+}
+
+.gal-tile:hover img,
+.gal-tile:focus-visible img { transform: scale(1.04); }
+
+.gal-tile:focus-visible { outline: 2px solid var(--gal-ink); outline-offset: 3px; }
+
+.gal-tile .gal-cap {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--gal-muted);
+}
+
+.gal-tile .gal-tag {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gal-red);
+}
+
+@keyframes gal-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---------- apparel: links, not a grid ---------- */
+
+.gal-apparel {
+  padding: clamp(28px, 5vw, 56px);
+  background: var(--gal-frame);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  max-width: 620px;
+}
+
+.gal-apparel p { margin: 0 0 22px; font-size: 16px; line-height: 1.55; }
+
+.gal-apparel-links { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.gal-apparel-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--gal-ink);
+  text-decoration: none;
+  padding: 13px 24px;
+  border: 1px solid var(--gal-ink);
+  border-radius: 999px;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.gal-apparel-links a:hover,
+.gal-apparel-links a:focus-visible {
+  background: var(--gal-red);
+  border-color: var(--gal-red);
+  color: #fff;
+}
+
+.gal-apparel-links a::after { content: "\2192"; }
+
+/* ---------- empty state ---------- */
+
+.gal-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--gal-muted);
+  font-size: 15px;
+}
+
+/* ---------- no-JS fallback ---------- */
+
+.gal-nojs {
+  padding: 20px 22px;
+  background: var(--gal-frame);
+  border: 1px solid var(--gal-line);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--gal-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gal-tile { animation: none; }
+  .gal-tile img { transition: none; }
+  .gal-tile:hover img { transform: none; }
+}

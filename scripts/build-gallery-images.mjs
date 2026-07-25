@@ -29,6 +29,16 @@ const CLIENTS = {
   'box-insurance': 'Box Insurance Agency',
 };
 
+// product-images/general/<type>/ -> the /gallery/ page, typed by folder.
+// These are not tied to a case-study client; the subfolder is the product type.
+const GENERAL = 'general';
+const GENERAL_TYPES = {
+  design: 'Design',
+  print: 'Print',
+  promo: 'Promo',
+  apparel: 'Apparel',
+};
+
 const SIZES = [
   { dir: 'thumb', width: 800, quality: 78 },
   { dir: 'full', width: 1800, quality: 82 },
@@ -62,7 +72,18 @@ async function main() {
 
   const rows = [];
   const byClient = {};
+  const byType = {};
   let total = 0;
+
+  async function convert(src, id) {
+    const meta = await sharp(src).metadata();
+    for (const { dir: sz, width, quality } of SIZES) {
+      const target = Math.min(width, meta.width);
+      await sharp(src).resize({ width: target, withoutEnlargement: true }).webp({ quality })
+        .toFile(join(OUT, sz, `${id}.webp`));
+    }
+    return Math.round((await stat(join(OUT, 'thumb', `${id}.webp`))).size / 1024);
+  }
 
   for (const [key, name] of Object.entries(CLIENTS)) {
     const files = await listImages(join(SRC, key));
@@ -70,19 +91,24 @@ async function main() {
 
     for (const file of files) {
       const id = slug(file, key);
-      const src = join(SRC, key, file);
-      const meta = await sharp(src).metadata();
-
-      for (const { dir: sz, width, quality } of SIZES) {
-        const target = Math.min(width, meta.width);
-        await sharp(src).resize({ width: target, withoutEnlargement: true }).webp({ quality })
-          .toFile(join(OUT, sz, `${id}.webp`));
-      }
-
-      const thumbKB = Math.round((await stat(join(OUT, 'thumb', `${id}.webp`))).size / 1024);
+      const thumbKB = await convert(join(SRC, key, file), id);
       const alt = altFromName(file) || 'PLACEHOLDER — describe the piece';
-      rows.push({ client: key, id, thumbKB, over: thumbKB > 400 ? 'YES' : '' });
+      rows.push({ group: key, id, thumbKB, over: thumbKB > 400 ? 'YES' : '' });
       byClient[key].entries.push(`      { id: '${id}', alt: ${JSON.stringify(alt)} },`);
+      total++;
+    }
+  }
+
+  for (const [type, label] of Object.entries(GENERAL_TYPES)) {
+    const files = await listImages(join(SRC, GENERAL, type));
+    byType[type] = { label, entries: [] };
+
+    for (const file of files) {
+      const id = slug(file, `general-${type}`);
+      const thumbKB = await convert(join(SRC, GENERAL, type, file), id);
+      const alt = altFromName(file) || 'PLACEHOLDER — describe the piece';
+      rows.push({ group: `general/${type}`, id, thumbKB, over: thumbKB > 400 ? 'YES' : '' });
+      byType[type].entries.push(`  { id: '${id}', type: '${label}', alt: ${JSON.stringify(alt)} },`);
       total++;
     }
   }
@@ -104,6 +130,17 @@ async function main() {
     console.log(`\n// ${name} (${key})`);
     console.log(entries.join('\n'));
   }
+
+  const generalEntries = Object.values(byType).flatMap((t) => t.entries);
+  if (generalEntries.length) {
+    console.log('\n--- paste into the GENERAL array in js/gallery-data.js (typed by folder) ---');
+    for (const { label, entries } of Object.values(byType)) {
+      if (!entries.length) continue;
+      console.log(`\n  // ${label}`);
+      console.log(entries.join('\n'));
+    }
+  }
+
   console.log('\n--- end ---');
   console.log(over.length === 0 ? 'RESULT=PASS' : 'RESULT=CHECK');
 }
