@@ -8,7 +8,7 @@ A faithful static mirror of **becreativetx.com** with an upgraded case-studies
 experience. One live project: **`bctx-live/`**.
 
 - Remote: **github.com/zeiddata-dev/becreativetx-static** (private)
-- Synced at commit `65379a6`
+- Synced to `origin/master` (pushed after each change set)
 - Run locally: `npx vite .` from `bctx-live/`, open a page (e.g. `casestudies.html`)
 
 ## How we got here (important context)
@@ -60,9 +60,9 @@ case-studies lightbox for the single-image zoom.
 - **Apparel is a workflow, not tiles:** the Apparel filter shows an ordering
   guide (shop blanks at the external Company Casuals store, list them in a quote,
   we design + price). Edit the steps/links in `gallery-data.js` under `apparel`.
-- **Type tags** on the 41 client products were assigned by sight (most Promo,
-  printed paper is Print). Four judgement calls are marked `FLAG` in
-  `casestudies-data.js` and await review.
+- **Type tags** on the 41 client products were assigned by sight and reviewed:
+  branded merch is Promo, printed paper is Print, and bespoke/creative pieces
+  (laser-cut invitation, coverage display, five-year award) are Design.
 - **Nav wired:** a `Gallery` item was added after `Design` in the header menu on
   every page by `scripts/add-gallery-nav.mjs`. On `gallery.html` the generator
   marks Gallery (not Print) as the current page.
@@ -102,16 +102,13 @@ end-to-end. See `product-images/README.md` and `product-images/general/README.md
 
 ## Open items
 
-1. **Review the four `FLAG` type tags** in `casestudies-data.js` (Momentum
-   napkins, Momentum laser-cut invitation, Box coverage display, Box 5-year
-   award) and confirm or reclassify.
-2. **Promo/Design coverage.** `general/promo` and `general/apparel` are empty;
-   Promo tiles currently come only from client work, Design only from
-   `general/design`. Add photos to `product-images/general/{promo,apparel}/` and
-   rebuild if more coverage is wanted.
-5. 6 `/portfolio/` detail pages not mirrored (not in crawl; flatten same way
+1. **Promo/Design coverage.** `general/promo` and `general/apparel` are empty
+   (client plans to add more to both). Add photos to
+   `product-images/general/{promo,apparel}/` and rebuild if more coverage is
+   wanted.
+2. 6 `/portfolio/` detail pages not mirrored (not in crawl; flatten same way
    after fetching).
-6. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
+3. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
    don't submit from the mirror. Separate wiring task.
 
 ## Parts bin (kept, not dead)

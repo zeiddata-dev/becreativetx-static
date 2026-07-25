@@ -15,7 +15,8 @@
    Each product also carries a `type` (Design / Print / Promo / Apparel). The
    case-studies overlay ignores it; the /gallery/ page uses it to filter. Types
    were assigned by sight: printed paper collateral is Print, branded physical
-   items are Promo. A few judgement calls are flagged FLAG for review. */
+   items are Promo, and bespoke/creative pieces (laser-cut, display, award) are
+   Design. */
 
 window.CASE_STUDIES = [
   {
@@ -36,13 +37,13 @@ window.CASE_STUDIES = [
     name: 'Momentum Spine & Joint',
     logoMatch: 'MOMENTUM-STACKED-PLAIN-DEBOSS',
     products: [
-      { id: 'momentum-01-branded-napkins', type: 'Promo', alt: 'Printed cocktail napkins branded for Momentum Spine & Joint.' }, // FLAG: paper good, could be Print
+      { id: 'momentum-01-branded-napkins', type: 'Print', alt: 'Printed cocktail napkins branded for Momentum Spine & Joint.' },
       { id: 'momentum-02-drink-stirrers-product', type: 'Promo', alt: 'Branded drink stirrers shown as a product shot for Momentum Spine & Joint.' },
       { id: 'momentum-03-drink-stirrers-in-use', type: 'Promo', alt: 'Branded drink stirrers shown in use in a drink for Momentum Spine & Joint.' },
       { id: 'momentum-04-location-map', type: 'Print', alt: 'Printed location map card for Momentum Spine & Joint.' },
       { id: 'momentum-05-contact-directory', type: 'Print', alt: 'Printed contact directory card for Momentum Spine & Joint.' },
       { id: 'momentum-06-branded-shot-glass', type: 'Promo', alt: 'Shot glass printed with the Momentum Spine & Joint logo.' },
-      { id: 'momentum-07-laser-cut-invitation', type: 'Print', alt: 'Laser-cut invitation printed for Momentum Spine & Joint.' }, // FLAG: laser-cut, could be Design
+      { id: 'momentum-07-laser-cut-invitation', type: 'Design', alt: 'Laser-cut invitation printed for Momentum Spine & Joint.' },
       { id: 'momentum-08-ruler-letter-opener', type: 'Promo', alt: 'Combination ruler and letter opener branded for Momentum Spine & Joint.' },
       { id: 'momentum-09-kraft-notebook', type: 'Promo', alt: 'Kraft-cover notebook branded for Momentum Spine & Joint.' },
       { id: 'momentum-10-ergonomic-wrist-rest-set', type: 'Promo', alt: 'Ergonomic wrist rest set branded for Momentum Spine & Joint.' },
@@ -78,12 +79,12 @@ window.CASE_STUDIES = [
       { id: 'box-insurance-03-leather-keychain-hanging-hero', type: 'Promo', alt: 'Leather keychain hanging, stamped with the Box Insurance Agency mark.' },
       { id: 'box-insurance-04-multipurpose-knife-desk-hero', type: 'Promo', alt: 'Multipurpose folding knife on a desk, branded for Box Insurance Agency.' },
       { id: 'box-insurance-05-solar-charger-outdoor-hero', type: 'Promo', alt: 'Solar power bank shown outdoors, branded for Box Insurance Agency.' },
-      { id: 'box-insurance-06-coverage-display-hero', type: 'Print', alt: 'Coverage display piece for Box Insurance Agency.' }, // FLAG: display piece, could be Design
+      { id: 'box-insurance-06-coverage-display-hero', type: 'Design', alt: 'Coverage display piece for Box Insurance Agency.' },
       { id: 'box-insurance-07-packaged-notebook-hero', type: 'Promo', alt: 'Packaged notebook branded for Box Insurance Agency.' },
       { id: 'box-insurance-08-bottle-group-close-hero', type: 'Promo', alt: 'Group of insulated bottles shown close up, branded for Box Insurance Agency.' },
       { id: 'box-insurance-09-bottle-group-spaced-hero', type: 'Promo', alt: 'Group of insulated bottles spaced apart, branded for Box Insurance Agency.' },
       { id: 'box-insurance-10-leather-keychain-desk-hero', type: 'Promo', alt: 'Leather keychain on a desk, stamped with the Box Insurance Agency mark.' },
-      { id: 'box-insurance-11-box-insurance-five-year-award-hero', type: 'Promo', alt: 'Five-year award piece for Box Insurance Agency.' }, // FLAG: award, could be Design
+      { id: 'box-insurance-11-box-insurance-five-year-award-hero', type: 'Design', alt: 'Five-year award piece for Box Insurance Agency.' },
       { id: 'box-insurance-11-multi-tool-black-hero', type: 'Promo', alt: 'Black multi-tool branded for Box Insurance Agency.' },
     ],
   },
