@@ -168,43 +168,77 @@
 
 @keyframes gal-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-/* ---------- apparel: links, not a grid ---------- */
+/* ---------- apparel: a workflow, not a grid ---------- */
 
 .gal-apparel {
-  padding: clamp(28px, 5vw, 56px);
+  padding: clamp(28px, 5vw, 52px);
   background: var(--gal-frame);
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 6px;
-  max-width: 620px;
+  max-width: 680px;
 }
 
-.gal-apparel p { margin: 0 0 22px; font-size: 16px; line-height: 1.55; }
+.gal-apparel-h {
+  font-family: "Poppins", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.15;
+  margin: 0 0 10px;
+}
 
-.gal-apparel-links { display: flex; flex-wrap: wrap; gap: 14px; }
+.gal-apparel-intro {
+  margin: 0 0 28px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--gal-muted);
+  max-width: 56ch;
+}
 
-.gal-apparel-links a {
+.gal-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+
+.gal-steps li { display: flex; align-items: flex-start; gap: 16px; }
+
+/* Numbered step marker in the red accent. */
+.gal-step-n {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gal-red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+}
+
+.gal-step-body { padding-top: 3px; }
+.gal-step-body p { margin: 0; font-size: 15px; line-height: 1.55; }
+
+.gal-apparel-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: 12px;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.04em;
   color: var(--gal-ink);
   text-decoration: none;
-  padding: 13px 24px;
+  padding: 11px 22px;
   border: 1px solid var(--gal-ink);
   border-radius: 999px;
   transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
 }
 
-.gal-apparel-links a:hover,
-.gal-apparel-links a:focus-visible {
+.gal-apparel-link:hover,
+.gal-apparel-link:focus-visible {
   background: var(--gal-red);
   border-color: var(--gal-red);
   color: #fff;
 }
 
-.gal-apparel-links a::after { content: "\2192"; }
+.gal-apparel-link::after { content: "\2192"; }
 
 /* ---------- empty state ---------- */
 

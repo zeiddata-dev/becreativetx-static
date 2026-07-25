@@ -47,15 +47,25 @@ window.GALLERY = {
     { id: 'general-print-watson-2023-calendar-hero', type: 'Print', alt: 'Printed 2023 calendar for Watson.' },
   ],
 
-  // Apparel is a pair of links on the live site, not a product grid.
-  // The primary link is the be creative branded-apparel store (external, opens
-  // in a new tab). Second link is internal. Set `external: true` for off-site
-  // targets so the page opens them in a new tab.
+  // Apparel is not a product grid. It explains the ordering workflow: apparel
+  // starts by choosing blanks in the external store, which then feed into a
+  // quote we design and price from. Each step may carry a link; set
+  // `external: true` for off-site targets so they open in a new tab.
   apparel: {
-    note: 'Browse the be creative branded apparel store, or tell us what you need and we will quote it.',
-    links: [
-      { label: 'Shop branded apparel', href: 'https://www.companycasuals.com/BeCreativeOnline/start.jsp', external: true },
-      { label: 'Request a quote', href: 'request-a-quote.html' },
+    heading: 'How to order branded apparel',
+    intro: 'Apparel starts with the blank. Pick the garments you want first, then we quote and design from there.',
+    steps: [
+      {
+        text: 'Browse the be creative apparel store and choose your blanks — the garment styles, colors, and sizes you want printed or embroidered.',
+        link: { label: 'Shop branded apparel', href: 'https://www.companycasuals.com/BeCreativeOnline/start.jsp', external: true },
+      },
+      {
+        text: 'List the blanks you picked in a quote request so we know exactly what you have in mind.',
+        link: { label: 'Request a quote', href: 'request-a-quote.html' },
+      },
+      {
+        text: 'Submit it and our team takes it from there with design and pricing.',
+      },
     ],
   },
 };

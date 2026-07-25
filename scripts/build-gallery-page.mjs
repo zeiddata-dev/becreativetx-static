@@ -57,6 +57,15 @@ out = out.replace(/<title>[^<]*<\/title>/, '<title>Our Work &#8211; be creative<
 // Content region: from the opening container-wrap to its closing comment.
 out = replaceBetween(out, '<div class="container-wrap">', '</div><!--/container-wrap-->', CONTENT, 'content');
 
+// Nav current-state: the cloned chrome marks its own page (Print) as current.
+// Neutralize that and mark Gallery as the current page instead.
+out = out.replaceAll(' aria-current="page"', '');
+out = out.replaceAll(' current-menu-item', '').replaceAll(' current_page_item', '');
+out = out.replaceAll(
+  'menu-item-gallery"><a href="gallery.html">Gallery</a>',
+  'menu-item-gallery current-menu-item"><a href="gallery.html" aria-current="page">Gallery</a>'
+);
+
 // Assets: CSS into <head>, scripts before </body>.
 out = out.replace('</head>', HEAD_LINKS + '</head>');
 out = out.replace('</body>', SCRIPTS + '</body>');

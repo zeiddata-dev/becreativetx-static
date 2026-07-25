@@ -128,14 +128,21 @@
     var wrap = document.createElement('div');
     wrap.className = 'gal-apparel';
     wrap.hidden = true;
-    var a = cfg.apparel || { note: '', links: [] };
-    var links = (a.links || []).map(function (l) {
-      var ext = l.external ? ' target="_blank" rel="noopener noreferrer"' : '';
-      return '<a href="' + esc(l.href) + '"' + ext + '>' + esc(l.label) + '</a>';
+    var a = cfg.apparel || {};
+    var steps = (a.steps || []).map(function (s, i) {
+      var link = '';
+      if (s.link) {
+        var ext = s.link.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+        link = '<a class="gal-apparel-link" href="' + esc(s.link.href) + '"' + ext + '>' +
+          esc(s.link.label) + '</a>';
+      }
+      return '<li><span class="gal-step-n" aria-hidden="true">' + (i + 1) + '</span>' +
+        '<div class="gal-step-body"><p>' + esc(s.text) + '</p>' + link + '</div></li>';
     }).join('');
     wrap.innerHTML =
-      '<p>' + esc(a.note || '') + '</p>' +
-      '<div class="gal-apparel-links">' + links + '</div>';
+      (a.heading ? '<h2 class="gal-apparel-h">' + esc(a.heading) + '</h2>' : '') +
+      (a.intro ? '<p class="gal-apparel-intro">' + esc(a.intro) + '</p>' : '') +
+      '<ol class="gal-steps">' + steps + '</ol>';
     return wrap;
   }
 
