@@ -7,9 +7,16 @@ Last updated 2026-07-25.
 A faithful static mirror of **becreativetx.com** with an upgraded case-studies
 experience. One live project: **`bctx-live/`**.
 
-- Remote: **github.com/zeiddata-dev/becreativetx-static** (private)
+- Remote: **github.com/zeiddata-dev/becreativetx-static** (public)
 - Synced to `origin/master` (pushed after each change set)
+- **Live (GitHub Pages):** https://zeiddata-dev.github.io/becreativetx-static/
+  — served from `master` root; pushes to `master` auto-redeploy. Repo was made
+  public so Pages works on the free plan.
 - Run locally: `npx vite .` from `bctx-live/`, open a page (e.g. `casestudies.html`)
+
+Known cosmetic gap: Font Awesome webfonts 404 on the live site (the icon-font
+files were never pulled local during flatten). Pre-existing, site-wide, low
+priority.
 
 ## How we got here (important context)
 
