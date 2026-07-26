@@ -18,9 +18,17 @@
   transition: transform 200ms ease, filter 200ms ease;
 }
 
+/* Normalize every client logo to one uniform height so the four read as the
+   same size regardless of aspect ratio (Unitron is portrait, the rest
+   landscape). Each logo renders at a fixed height with its natural width and
+   is centered; max-width guards against overflow in a narrow column. */
 .cs-logo-btn img {
   display: block;
-  width: 100%;
+  width: auto;
+  height: clamp(88px, 11vw, 150px);
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
 /* Subtle lift on hover/focus — no color effect. */
