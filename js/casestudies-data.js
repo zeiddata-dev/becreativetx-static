@@ -55,7 +55,7 @@ window.CASE_STUDIES = [
   {
     key: 'allen',
     name: 'City of Allen',
-    logoMatch: 'ALLEN-PLAIN-DEBOSS',
+    logoMatch: 'allen.webp',
     products: [
       { id: 'allen-01-city-of-allen-bag-dispenser', type: 'Promo', alt: 'Bag dispenser branded with the City of Allen logo.' },
       { id: 'allen-02-city-of-allen-cups', type: 'Promo', alt: 'Stadium cups printed with the City of Allen logo.' },
@@ -74,7 +74,7 @@ window.CASE_STUDIES = [
   {
     key: 'box',
     name: 'Box Insurance Agency',
-    logoMatch: 'BOX-PLAIN-DEBOSS',
+    logoMatch: 'box.webp',
     products: [
       { id: 'box-insurance-01-flashlight-hero', type: 'Promo', alt: 'Aluminium flashlight branded for Box Insurance Agency.' },
       { id: 'box-insurance-02-multipurpose-knife-stone-hero', type: 'Promo', alt: 'Multipurpose folding knife on stone, branded for Box Insurance Agency.' },
