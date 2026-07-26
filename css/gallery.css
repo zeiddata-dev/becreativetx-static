@@ -196,21 +196,7 @@
 
 .gal-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
 
-.gal-steps li { display: flex; align-items: flex-start; gap: 16px; }
-
-/* Numbered step marker in the royal blue accent. */
-.gal-step-n {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--gal-accent);
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  display: grid;
-  place-items: center;
-}
+.gal-steps li { display: flex; align-items: flex-start; }
 
 .gal-step-body { padding-top: 3px; }
 .gal-step-body p { margin: 0; font-size: 15px; line-height: 1.55; }
@@ -223,19 +209,15 @@
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.04em;
-  color: var(--gal-ink);
+  color: var(--gal-accent);
   text-decoration: none;
-  padding: 11px 22px;
-  border: 1px solid var(--gal-ink);
-  border-radius: 999px;
-  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition: color 180ms ease;
 }
 
 .gal-apparel-link:hover,
 .gal-apparel-link:focus-visible {
-  background: var(--gal-accent);
-  border-color: var(--gal-accent);
-  color: #fff;
+  color: var(--gal-accent);
+  text-decoration: underline;
 }
 
 

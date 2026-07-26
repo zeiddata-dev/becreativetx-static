@@ -129,15 +129,14 @@
     wrap.className = 'gal-apparel';
     wrap.hidden = true;
     var a = cfg.apparel || {};
-    var steps = (a.steps || []).map(function (s, i) {
+    var steps = (a.steps || []).map(function (s) {
       var link = '';
       if (s.link) {
         var ext = s.link.external ? ' target="_blank" rel="noopener noreferrer"' : '';
         link = '<a class="gal-apparel-link" href="' + esc(s.link.href) + '"' + ext + '>' +
           esc(s.link.label) + '</a>';
       }
-      return '<li><span class="gal-step-n" aria-hidden="true">' + (i + 1) + '</span>' +
-        '<div class="gal-step-body"><p>' + esc(s.text) + '</p>' + link + '</div></li>';
+      return '<li><div class="gal-step-body"><p>' + esc(s.text) + '</p>' + link + '</div></li>';
     }).join('');
     wrap.innerHTML =
       (a.heading ? '<h2 class="gal-apparel-h">' + esc(a.heading) + '</h2>' : '') +
