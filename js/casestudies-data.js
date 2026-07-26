@@ -30,6 +30,7 @@ window.CASE_STUDIES = [
       { id: 'unitron-unitron-zipper-pouch-hero', type: 'Promo', alt: 'Zippered accessory pouch branded for Unitron Power Systems.' },
       { id: 'unitron-atlas-marine-usb-drive-hero', type: 'Promo', alt: 'Swivel USB flash drive branded for Atlas Marine Systems.' },
       { id: 'unitron-atlas-marine-zipper-pouch-hero', type: 'Promo', alt: 'Zippered accessory pouch branded for Atlas Marine Systems.' },
+      { id: 'general-design-atlas-marine-cleaning-cloth-hero', type: 'Design', alt: 'Branded microfiber cleaning cloth for Atlas Marine Systems.' },
     ],
   },
   {
@@ -67,6 +68,7 @@ window.CASE_STUDIES = [
       { id: 'allen-09-city-of-allen-soil-tester', type: 'Promo', alt: 'Soil tester branded with the City of Allen logo.' },
       { id: 'allen-10-city-of-allen-pen-set', type: 'Promo', alt: 'Engraved pen set in a presentation case for the City of Allen.' },
       { id: 'allen-11-visit-allen-meeting-bottle', type: 'Promo', alt: 'Insulated meeting bottle branded for Visit Allen, Texas.' },
+      { id: 'general-design-01-dollar-sign-money-clip-hero', type: 'Design', alt: 'Dollar-sign money clip for the City of Allen.' },
     ],
   },
   {

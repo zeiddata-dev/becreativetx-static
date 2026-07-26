@@ -22,9 +22,7 @@ window.GALLERY = {
   // General work, typed by folder. alt describes only what the photo shows.
   general: [
     // Design
-    { id: 'general-design-01-dollar-sign-money-clip-hero', type: 'Design', alt: 'Dollar-sign money clip.' },
     { id: 'general-design-02-naked-bomb-packaging-hero', type: 'Design', alt: 'Product packaging designed for Naked Bomb.' },
-    { id: 'general-design-atlas-marine-cleaning-cloth-hero', type: 'Design', alt: 'Branded microfiber cleaning cloth for Atlas Marine Systems.' },
     { id: 'general-design-foxcart-cleaning-cloth-hero', type: 'Design', alt: 'Branded microfiber cleaning cloth for Foxcart.' },
     { id: 'general-design-legacy-badges-lanyards-hero', type: 'Design', alt: 'Event badges and lanyards designed for Legacy.' },
 

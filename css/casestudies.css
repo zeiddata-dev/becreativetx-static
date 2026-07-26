@@ -15,15 +15,25 @@
   cursor: pointer;
   display: block;
   width: 100%;
+  /* Each logo lights up in its own brand color on hover, pulled from the real
+     client logos. Falls back to the royal-blue site accent. */
+  --brand: rgba(65, 105, 225, 0.55);
   transition: transform 200ms ease, filter 200ms ease;
 }
 
-/* Lift and glow on hover. filter/drop-shadow tracks the logo's own shape, so
-   the glow reads on the transparent-background marks rather than a box. */
+/* Per-client brand color, matched to each client's real logo palette. */
+.cs-logo-btn:has(img[src*="UNITRON"])  { --brand: rgba(27, 163, 201, 0.62); }   /* Unitron cyan */
+.cs-logo-btn:has(img[src*="MOMENTUM"]) { --brand: rgba(41, 163, 219, 0.62); }   /* Momentum blue */
+.cs-logo-btn:has(img[src*="ALLEN"])    { --brand: rgba(28, 61, 135, 0.60); }    /* City of Allen navy */
+.cs-logo-btn:has(img[src*="BOX"])      { --brand: rgba(47, 90, 95, 0.62); }     /* Box Insurance teal */
+
+/* Lift and glow on hover. The drop-shadow tracks the logo's own shape, so the
+   brand color reads on the transparent-background marks rather than a box.
+   Reverts to the plain deboss the moment the pointer leaves. */
 .cs-logo-btn:hover,
 .cs-logo-btn:focus-visible {
   transform: translateY(-3px);
-  filter: drop-shadow(0 0 13px rgba(65, 105, 225, 0.54)) brightness(1.04);
+  filter: drop-shadow(0 0 10px var(--brand)) drop-shadow(0 0 22px var(--brand)) brightness(1.05);
 }
 
 .cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
