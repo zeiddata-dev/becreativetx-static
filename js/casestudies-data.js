@@ -36,7 +36,7 @@ window.CASE_STUDIES = [
   {
     key: 'momentum',
     name: 'Momentum Spine & Joint',
-    logoMatch: 'MOMENTUM-STACKED-PLAIN-DEBOSS',
+    logoMatch: 'momentum.webp',
     products: [
       { id: 'momentum-01-branded-napkins', type: 'Print', alt: 'Printed cocktail napkins branded for Momentum Spine & Joint.' },
       { id: 'momentum-02-drink-stirrers-product', type: 'Promo', alt: 'Branded drink stirrers shown as a product shot for Momentum Spine & Joint.' },

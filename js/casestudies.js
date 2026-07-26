@@ -18,7 +18,7 @@
 
   // Match each on-page logo image to its client via logoMatch, and turn the
   // logo into a button that opens the overlay.
-  var logos = [].slice.call(document.querySelectorAll('img[src*="PLAIN-DEBOSS"]'));
+  var logos = [].slice.call(document.querySelectorAll('img[src*="PLAIN-DEBOSS"], img[data-cs-logo]'));
 
   clients.forEach(function (client) {
     var img = logos.filter(function (i) { return i.getAttribute('src').indexOf(client.logoMatch) !== -1; })[0];
@@ -35,6 +35,11 @@
 
     img.parentNode.insertBefore(btn, img);
     btn.appendChild(img);
+
+    // Converted logos (data-cs-logo) ship a transparent full-color mark that
+    // CSS desaturates at rest and brings to color on hover/focus/tap.
+    if (img.hasAttribute('data-cs-logo')) btn.classList.add('cs-logo-btn--swap');
+
     btn.appendChild(cue);
     btn.addEventListener('click', function () { openOverlay(client); });
   });

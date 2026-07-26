@@ -49,6 +49,23 @@
 .cs-logo-btn:hover .cs-logo-cue,
 .cs-logo-btn:focus-visible .cs-logo-cue { opacity: 1; }
 
+/* ---------- mono -> color logo reveal ---------- */
+
+/* Converted logos carry one transparent, full-color mark. It sits desaturated
+   (and slightly dimmed) at rest, then eases to full color on hover/focus/tap so
+   the logo appears to come to life. The button click (opens the work overlay)
+   is untouched. */
+.cs-logo-btn--swap img {
+  filter: grayscale(1);
+  transition: filter 260ms ease;
+}
+
+.cs-logo-btn--swap:hover img,
+.cs-logo-btn--swap:focus-visible img,
+.cs-logo-btn--swap:active img {
+  filter: grayscale(0);
+}
+
 /* ---------- "see more in the gallery" link under the logos ---------- */
 
 .cs-see-more {
@@ -227,7 +244,7 @@
 .cs-zoom-pos { font-size: 12px; color: rgba(0, 0, 0, 0.6); }
 
 @media (prefers-reduced-motion: reduce) {
-  .cs-logo-btn, .cs-logo-cue, .cs-tile img { transition: none; }
+  .cs-logo-btn, .cs-logo-cue, .cs-logo-btn--swap img, .cs-tile img { transition: none; }
   .cs-logo-btn:hover { transform: none; }
   .cs-tile:hover img { transform: none; }
 }
