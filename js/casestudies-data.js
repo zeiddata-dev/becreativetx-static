@@ -22,7 +22,7 @@ window.CASE_STUDIES = [
   {
     key: 'unitron',
     name: 'Unitron Power Systems',
-    logoMatch: 'UNITRON-PLAIN-DEBOSS',
+    logoMatch: 'unitron.webp',
     products: [
       { id: 'unitron-unitron-four-port-charger-hero', type: 'Promo', alt: 'Four-port USB wall charger branded for Unitron Power Systems.' },
       { id: 'unitron-unitron-usb-drive-hero', type: 'Promo', alt: 'Swivel USB flash drive branded for Unitron Power Systems.' },
