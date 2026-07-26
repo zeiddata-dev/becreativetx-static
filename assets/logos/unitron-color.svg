@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 440" width="100%" height="100%">
+  <!-- Right Blue Curve -->
+  <path d="M 230 30 L 330 30 L 330 170 A 140 140 0 0 1 175 308 L 175 208 A 40 40 0 0 0 230 170 Z" fill="#4d8fac" />
+  
+  <!-- Left Black Stem & Arrow -->
+  <path d="M 70 30 L 170 30 L 170 140 L 175 145 L 270 230 L 170 315 A 140 140 0 0 1 70 170 Z" fill="#000000" />
+  
+  <!-- Typography -->
+  <text x="55" y="395" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="82" font-weight="800" fill="#000000" letter-spacing="-1">Unitron</text>
+</svg>

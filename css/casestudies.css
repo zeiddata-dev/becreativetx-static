@@ -9,32 +9,49 @@
 /* ---------- logo affordance ---------- */
 
 .cs-logo-btn {
+  position: relative;
   border: 0;
   background: none;
   padding: 0;
   cursor: pointer;
   display: block;
   width: 100%;
-  /* Each logo lights up in its own brand color on hover, pulled from the real
-     client logos. Falls back to the royal-blue site accent. */
-  --brand: rgba(65, 105, 225, 0.55);
   transition: transform 200ms ease, filter 200ms ease;
 }
 
-/* Per-client brand color, matched to each client's real logo palette. */
-.cs-logo-btn:has(img[src*="UNITRON"])  { --brand: rgba(27, 163, 201, 0.62); }   /* Unitron cyan */
-.cs-logo-btn:has(img[src*="MOMENTUM"]) { --brand: rgba(41, 163, 219, 0.62); }   /* Momentum blue */
-.cs-logo-btn:has(img[src*="ALLEN"])    { --brand: rgba(28, 61, 135, 0.60); }    /* City of Allen navy */
-.cs-logo-btn:has(img[src*="BOX"])      { --brand: rgba(47, 90, 95, 0.62); }     /* Box Insurance teal */
-
-/* Lift and glow on hover. The drop-shadow tracks the logo's own shape, so the
-   brand color reads on the transparent-background marks rather than a box.
-   Reverts to the plain deboss the moment the pointer leaves. */
-.cs-logo-btn:hover,
-.cs-logo-btn:focus-visible {
-  transform: translateY(-3px);
-  filter: drop-shadow(0 0 10px var(--brand)) drop-shadow(0 0 22px var(--brand)) brightness(1.05);
+/* The plain deboss mark, shown by default; it fades out as the color fades in. */
+.cs-logo-btn img.cs-logo-deboss {
+  display: block;
+  width: 100%;
+  transition: opacity 240ms ease;
 }
+
+/* The full-color brand logo, layered over the deboss and hidden until hover. */
+.cs-logo-color {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
+}
+
+/* Lift the mark and cross-fade from the plain deboss to the real brand colors.
+   Reverts to the deboss the moment the pointer leaves (or the tap ends). */
+.cs-logo-btn:hover,
+.cs-logo-btn:focus-visible,
+.cs-logo-btn:active {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+}
+.cs-logo-btn:hover .cs-logo-color,
+.cs-logo-btn:focus-visible .cs-logo-color,
+.cs-logo-btn:active .cs-logo-color { opacity: 1; }
+.cs-logo-btn:hover img.cs-logo-deboss,
+.cs-logo-btn:focus-visible img.cs-logo-deboss,
+.cs-logo-btn:active img.cs-logo-deboss { opacity: 0; }
 
 .cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
 
