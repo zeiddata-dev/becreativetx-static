@@ -31,6 +31,12 @@
   object-fit: contain;
 }
 
+/* Unitron stacks its mark over the wordmark, so at the shared height its mark
+   reads larger than the others'. Trim it to 90% to balance the row. */
+.cs-logo-btn img[src*="unitron"] {
+  height: calc(clamp(88px, 11vw, 150px) * 0.9);
+}
+
 /* Subtle lift on hover/focus — no color effect. */
 .cs-logo-btn:hover,
 .cs-logo-btn:focus-visible {
