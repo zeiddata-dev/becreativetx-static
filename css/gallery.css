@@ -11,7 +11,7 @@
   --gal-ink: #111;
   --gal-muted: rgba(0, 0, 0, 0.6);
   --gal-line: rgba(0, 0, 0, 0.14);
-  --gal-red: rgb(200, 40, 40);
+  --gal-accent: rgb(65, 105, 225);
   --gal-frame: #fafafa;
 }
 
@@ -43,7 +43,7 @@
   width: 56px;
   height: 4px;
   margin-top: 18px;
-  background: var(--gal-red);
+  background: var(--gal-accent);
 }
 
 .gal-intro p {
@@ -84,8 +84,8 @@
 .gal-chip:hover { color: var(--gal-ink); }
 
 .gal-chip[aria-pressed="true"] {
-  color: var(--gal-red);
-  text-shadow: 0 0 16px rgba(200, 40, 40, 0.55), 0 0 4px rgba(200, 40, 40, 0.35);
+  color: var(--gal-accent);
+  text-shadow: 0 0 16px rgba(65, 105, 225, 0.55), 0 0 4px rgba(65, 105, 225, 0.35);
 }
 
 .gal-chip .gal-count {
@@ -163,7 +163,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gal-red);
+  color: var(--gal-accent);
 }
 
 @keyframes gal-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -198,13 +198,13 @@
 
 .gal-steps li { display: flex; align-items: flex-start; gap: 16px; }
 
-/* Numbered step marker in the red accent. */
+/* Numbered step marker in the royal blue accent. */
 .gal-step-n {
   flex: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--gal-red);
+  background: var(--gal-accent);
   color: #fff;
   font-weight: 700;
   font-size: 15px;
@@ -233,12 +233,11 @@
 
 .gal-apparel-link:hover,
 .gal-apparel-link:focus-visible {
-  background: var(--gal-red);
-  border-color: var(--gal-red);
+  background: var(--gal-accent);
+  border-color: var(--gal-accent);
   color: #fff;
 }
 
-.gal-apparel-link::after { content: "\2192"; }
 
 /* ---------- empty state ---------- */
 

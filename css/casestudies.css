@@ -23,7 +23,7 @@
 .cs-logo-btn:hover,
 .cs-logo-btn:focus-visible {
   transform: translateY(-3px);
-  filter: drop-shadow(0 0 13px rgba(200, 40, 40, 0.54)) brightness(1.04);
+  filter: drop-shadow(0 0 13px rgba(65, 105, 225, 0.54)) brightness(1.04);
 }
 
 .cs-logo-btn:focus-visible { outline: 2px solid #111; outline-offset: 6px; }
@@ -64,12 +64,11 @@
   transition: color 180ms ease, border-color 180ms ease;
 }
 
-.cs-see-more a::after { content: " \2192"; }
 
 .cs-see-more a:hover,
 .cs-see-more a:focus-visible {
-  color: rgb(200, 40, 40);
-  border-bottom-color: rgb(200, 40, 40);
+  color: rgb(65, 105, 225);
+  border-bottom-color: rgb(65, 105, 225);
 }
 
 /* ---------- overlay: dimmed backdrop + floating panel ---------- */

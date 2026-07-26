@@ -1,7 +1,7 @@
 /* home.css
    Small home-page tweaks. Currently: the "Case Studies" link, enlarged into an
-   obvious, clickable call-to-action with an arrow. Matched to the site look
-   (Poppins, red accent). No motion. */
+   obvious, clickable call-to-action. Matched to the site look
+   (Poppins, royal blue accent). No motion. */
 
 .home-cs-cta {
   text-align: center;
@@ -24,15 +24,11 @@
   transition: color 180ms ease, border-color 180ms ease;
 }
 
-.home-cs-cta a .arrow {
-  font-size: 0.9em;
-  line-height: 1;
-}
 
 .home-cs-cta a:hover,
 .home-cs-cta a:focus-visible {
-  color: rgb(200, 40, 40);
-  border-bottom-color: rgb(200, 40, 40);
+  color: rgb(65, 105, 225);
+  border-bottom-color: rgb(65, 105, 225);
 }
 
 /* ---------- "What they say" testimonials: horizontal auto-scroll ---------- */
@@ -85,7 +81,7 @@
 }
 
 .tm-track blockquote .image-icon {
-  color: rgb(200, 40, 40);
+  color: rgb(65, 105, 225);
   font-size: 44px;
   line-height: 0.5;
   margin-bottom: 8px;
@@ -106,7 +102,7 @@
 .tm-track blockquote .star-rating-wrap { display: block; margin: 0 0 14px; }
 
 .tm-track blockquote .tm-stars {
-  color: rgb(200, 40, 40);
+  color: rgb(65, 105, 225);
   font-size: 15px;
   letter-spacing: 3px;
 }
