@@ -23,7 +23,6 @@ window.CASE_STUDIES = [
     key: 'unitron',
     name: 'Unitron Power Systems',
     logoMatch: 'UNITRON-PLAIN-DEBOSS',
-    colorLogo: 'assets/logos/unitron-color.svg',
     products: [
       { id: 'unitron-unitron-four-port-charger-hero', type: 'Promo', alt: 'Four-port USB wall charger branded for Unitron Power Systems.' },
       { id: 'unitron-unitron-usb-drive-hero', type: 'Promo', alt: 'Swivel USB flash drive branded for Unitron Power Systems.' },
@@ -38,7 +37,6 @@ window.CASE_STUDIES = [
     key: 'momentum',
     name: 'Momentum Spine & Joint',
     logoMatch: 'MOMENTUM-STACKED-PLAIN-DEBOSS',
-    colorLogo: 'assets/logos/momentum-color.webp',
     products: [
       { id: 'momentum-01-branded-napkins', type: 'Print', alt: 'Printed cocktail napkins branded for Momentum Spine & Joint.' },
       { id: 'momentum-02-drink-stirrers-product', type: 'Promo', alt: 'Branded drink stirrers shown as a product shot for Momentum Spine & Joint.' },
@@ -58,7 +56,6 @@ window.CASE_STUDIES = [
     key: 'allen',
     name: 'City of Allen',
     logoMatch: 'ALLEN-PLAIN-DEBOSS',
-    colorLogo: 'assets/logos/allen-color.webp',
     products: [
       { id: 'allen-01-city-of-allen-bag-dispenser', type: 'Promo', alt: 'Bag dispenser branded with the City of Allen logo.' },
       { id: 'allen-02-city-of-allen-cups', type: 'Promo', alt: 'Stadium cups printed with the City of Allen logo.' },
@@ -78,7 +75,6 @@ window.CASE_STUDIES = [
     key: 'box',
     name: 'Box Insurance Agency',
     logoMatch: 'BOX-PLAIN-DEBOSS',
-    colorLogo: 'assets/logos/box-color.webp',
     products: [
       { id: 'box-insurance-01-flashlight-hero', type: 'Promo', alt: 'Aluminium flashlight branded for Box Insurance Agency.' },
       { id: 'box-insurance-02-multipurpose-knife-stone-hero', type: 'Promo', alt: 'Multipurpose folding knife on stone, branded for Box Insurance Agency.' },

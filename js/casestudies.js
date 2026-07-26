@@ -34,20 +34,7 @@
     cue.textContent = 'View work';
 
     img.parentNode.insertBefore(btn, img);
-    img.classList.add('cs-logo-deboss');
     btn.appendChild(img);
-
-    // Full-color brand logo, revealed over the plain deboss on hover/focus.
-    if (client.colorLogo) {
-      var color = document.createElement('img');
-      color.className = 'cs-logo-color';
-      color.src = client.colorLogo;
-      color.alt = '';
-      color.setAttribute('aria-hidden', 'true');
-      color.setAttribute('decoding', 'async');
-      btn.appendChild(color);
-    }
-
     btn.appendChild(cue);
     btn.addEventListener('click', function () { openOverlay(client); });
   });
