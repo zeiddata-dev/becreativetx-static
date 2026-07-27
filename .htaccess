@@ -14,6 +14,15 @@ DirectoryIndex index.html
     RewriteCond %{HTTPS} off
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+    # ---- 1b. Map legacy asset paths onto the static tree ------------------
+    # The WP export left absolute /wp-content/... URLs embedded in the pages
+    # (Slider Revolution loads its runtime CSS/JS modules from them). Those
+    # files live under /assets/wp-content/... here, so rewrite internally
+    # when the target exists. Internal (no redirect) is fine: these are
+    # asset requests, not pages with relative bases.
+    RewriteCond %{DOCUMENT_ROOT}/assets/wp-content/$1 -f
+    RewriteRule ^wp-content/(.+)$ /assets/wp-content/$1 [L]
+
     # ---- 2. Preserve old WordPress directory-style URLs -------------------
     # Old links looked like /request-a-quote/ ; the static export is
     # request-a-quote.html. We 301-REDIRECT (not internal rewrite) so the
