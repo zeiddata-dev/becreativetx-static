@@ -231,6 +231,11 @@ function send_lead($subject, $body, $reply_to_email, $reply_to_name) {
     if ($reply_to_email !== '' && is_valid_email($reply_to_email)) {
         $rn = header_safe($reply_to_name);
         $re = header_safe($reply_to_email);
+        // Quote the display name (RFC 5322): commas, dots etc. in values like
+        // "Acme, Inc." would otherwise be parsed as an address-list separator.
+        if ($rn !== '') {
+            $rn = '"' . addcslashes($rn, "\\\"") . '"';
+        }
         $headers[] = 'Reply-To: ' . ($rn !== '' ? $rn . ' <' . $re . '>' : $re);
     }
     $headers[] = 'MIME-Version: 1.0';

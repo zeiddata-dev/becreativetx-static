@@ -64,16 +64,35 @@ if ($errors) {
     respond_error(implode(' ', $errors));
 }
 
-// ---- Optional artwork upload (dropzone converted to a real file input) ----
+// ---- Optional artwork uploads (native multi-file input, up to 10) ---------
 $file_note = 'None';
-if (isset($_FILES['wpforms_544_12']) && isset($_FILES['wpforms_544_12']['error'])
-    && $_FILES['wpforms_544_12']['error'] !== UPLOAD_ERR_NO_FILE) {
-    $err = '';
-    $saved = save_upload($_FILES['wpforms_544_12'], $GLOBALS['ALLOWED_UPLOAD_EXT'], $err);
-    if ($saved === null) {
-        respond_error('Artwork upload problem: ' . $err);
+if (isset($_FILES['wpforms_544_12']) && is_array($_FILES['wpforms_544_12']['error'])) {
+    $upload = $_FILES['wpforms_544_12'];
+    if (count($upload['error']) > 10) {
+        respond_error('Please attach no more than 10 files.');
     }
-    $file_note = $saved['name'] . '  (stored at /uploads/' . $saved['name'] . ')';
+    $saved_notes = array();
+    foreach ($upload['error'] as $i => $err_code) {
+        if ($err_code === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+        $one = array(
+            'name'     => $upload['name'][$i],
+            'type'     => $upload['type'][$i],
+            'tmp_name' => $upload['tmp_name'][$i],
+            'error'    => $err_code,
+            'size'     => $upload['size'][$i],
+        );
+        $err = '';
+        $saved = save_upload($one, $GLOBALS['ALLOWED_UPLOAD_EXT'], $err);
+        if ($saved === null) {
+            respond_error('Artwork upload problem: ' . $err);
+        }
+        $saved_notes[] = $saved['name'] . '  (stored at /uploads/' . $saved['name'] . ')';
+    }
+    if ($saved_notes) {
+        $file_note = implode("\n               ", $saved_notes);
+    }
 }
 
 // ---- Build and send email -------------------------------------------------
