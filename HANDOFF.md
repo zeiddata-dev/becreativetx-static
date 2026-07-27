@@ -1,6 +1,58 @@
 # be creative — project handoff
 
-Last updated 2026-07-25.
+Last updated 2026-07-27.
+
+## ACTIVE WORK: migration to Hostinger (2026-07-27)
+
+**Goal:** retire the WordPress site on Hostinger and serve this static mirror in
+its place. Same domain (`becreativetx.com`), same Hostinger account (already paid
+annually), **no DNS changes**, working forms, zero-downtime reversible cutover.
+Driver wants it live within ~24h, no drawn-out QA (a 20-min smoke test only).
+
+### Decision (settled)
+- Static on **Hostinger**, not Cloudflare. Cloudflare Pages was the cleaner
+  static host, but "already paid + DNS never moves + forms rebuilt either way"
+  won. Cloudflare Workers was never relevant (no compute).
+- WordPress content does **not** import back; this repo is the rendered output
+  and is already ahead of the live WP site. Going static ships the work as-is.
+
+### Built this session (in repo, NOT committed, NOT deployed)
+- `forms/config.php` — shared config: SMTP creds (placeholders), TO/FROM email,
+  25MB upload cap, helpers (honeypot, header sanitize, `save_upload`, `send_lead`).
+- `forms/quote.php` — Request-a-Quote handler (validate, honeypot, optional
+  artwork upload, emails lead).
+- `forms/upload.php` — Upload-Art handler (validate, email-match check, stores
+  file, emails path).
+- `uploads/.htaccess` — no listing, no script exec, forces safe download.
+- `.htaccess` (root) — forces HTTPS, 301-redirects all 9 old WP directory URLs to
+  `.html` (incl. `/design/`→`design-2.html`), custom 404, gzip + caching.
+- Edited `request-a-quote.html` + `upload-art.html`: form `action` → PHP handlers,
+  stripped WPForms AJAX classes / `data-token*` / noscript, added `bctx_hp`
+  honeypot, converted the dead dropzone to a real file input.
+- `DEPLOY.md` — full Phase 0–5 Hostinger runbook (backup, staging, QA, folder-swap
+  cutover + rollback, email/SPF/DKIM/DMARC fix, post-launch).
+- **Deploy zip** built at `<scratchpad>/bctx-deploy.zip` (521 files, 41 MB;
+  excludes `.git/.claude/.idea/.remember/docs` + internal `.md`). Rebuild with the
+  shared-read PowerShell snippet (Compress-Archive chokes on locked files).
+
+### Email / DNS findings (live check 2026-07-26)
+- NS `ns1/ns2.dns-parking.com` = Hostinger DNS → confirms no DNS move needed.
+- MX `mx1/mx2.hostinger.com` **PASS**; SPF `v=spf1 include:_spf.mail.hostinger.com ~all` **PASS**; DMARC `p=none` present.
+- **DKIM missing** (`hostingermail1/2._domainkey` absent). Driver reports mail now
+  sends to Gmail, but DKIM had **not** published as of last check — re-check; if
+  still blank the hPanel toggle didn't save. Not a blocker; affects spam only, and
+  form emails ride the same SPF/DKIM.
+
+### Blocker / next action
+- **No Hostinger access from here** (no hPanel/FTP; won't handle account
+  password). The deploy must be run by someone logged in, following `DEPLOY.md`,
+  OR by driving the driver's logged-in browser (offered; awaiting go).
+- Operator TODO: fill `forms/config.php` SMTP creds; `uploads/` → 755; confirm
+  server `upload_max_filesize`/`post_max_size` ≥ 25MB; verify DKIM.
+- **Not started:** actual upload/extract/cutover on Hostinger. Nothing is live.
+
+### Client note
+- Email to Chris (casual, why + next steps) drafted and **sent** by driver.
 
 ## What this is
 
@@ -115,8 +167,9 @@ end-to-end. See `product-images/README.md` and `product-images/general/README.md
    wanted.
 2. 6 `/portfolio/` detail pages not mirrored (not in crawl; flatten same way
    after fetching).
-3. Forms (quote, upload-art, newsletter) still POST to live WordPress endpoints;
-   don't submit from the mirror. Separate wiring task.
+3. ~~Forms POST to live WordPress endpoints~~ **DONE (2026-07-27):** quote +
+   upload-art rewired to `forms/*.php` handlers. See ACTIVE WORK section. The
+   **newsletter** form (if present) was not rewired — verify before launch.
 
 ## Parts bin (kept, not dead)
 
