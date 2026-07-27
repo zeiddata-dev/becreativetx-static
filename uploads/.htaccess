@@ -1,0 +1,24 @@
+# /uploads/ directory policy
+#
+# Files here are artwork submitted through the Upload Art form. The operator
+# CAN still retrieve any file directly by its exact URL, e.g.
+#   https://becreativetx.com/uploads/20260726-141530_ab12cd34_logo.pdf
+# ...or over SFTP / hPanel File Manager. What is blocked below is directory
+# BROWSING (so the list of everyone's files is not public) and any attempt to
+# execute an uploaded file as a script.
+
+# 1. No directory listing.
+Options -Indexes
+
+# 2. Never run uploaded files as code. Extensions are validated on upload, but
+#    this is defense in depth in case something slips through.
+<FilesMatch "\.(php|php3|php4|php5|php7|phtml|pht|cgi|pl|py|sh|asp|aspx)$">
+    Require all denied
+</FilesMatch>
+
+# 3. Force downloads and stop content-type sniffing. This neutralizes stored
+#    XSS from types like .svg being opened inline in the browser.
+<IfModule mod_headers.c>
+    Header set Content-Disposition "attachment"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>

@@ -8,3 +8,6 @@ Thumbs.db
 
 # Delivery archives dropped into intake folders (individual images are tracked)
 product-images/**/*.zip
+
+# Staged hosting copy built from .remember/deploy-manifest.txt (regenerate, don't edit)
+public_html/

@@ -1,0 +1,82 @@
+# =========================================================================
+# Be Creative - static site root configuration (Hostinger / Apache)
+# =========================================================================
+
+# Serve index.html for "/". Because the homepage uses relative asset paths,
+# the request base must stay "/", so this is a plain DirectoryIndex, not a
+# redirect.
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ---- 1. Force HTTPS (done first so legacy links take a single hop) ----
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # ---- 1b. Map legacy asset paths onto the static tree ------------------
+    # The WP export left absolute /wp-content/... URLs embedded in the pages
+    # (Slider Revolution loads its runtime CSS/JS modules from them). Those
+    # files live under /assets/wp-content/... here, so rewrite internally
+    # when the target exists. Internal (no redirect) is fine: these are
+    # asset requests, not pages with relative bases.
+    RewriteCond %{DOCUMENT_ROOT}/assets/wp-content/$1 -f
+    RewriteRule ^wp-content/(.+)$ /assets/wp-content/$1 [L]
+
+    # ---- 2. Preserve old WordPress directory-style URLs -------------------
+    # Old links looked like /request-a-quote/ ; the static export is
+    # request-a-quote.html. We 301-REDIRECT (not internal rewrite) so the
+    # address bar actually changes to the .html URL. That matters because
+    # every page loads assets with RELATIVE paths - an internal rewrite would
+    # leave the URL at /request-a-quote/ and every "assets/..." reference
+    # would resolve under that fake folder and 404.
+    #
+    # Only redirect when the request is not already a real file or directory.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Explicit legacy alias: the "Design" page slug was almost certainly
+    # /design/ before the export renamed the file to design-2.html.
+    RewriteRule ^design/?$ /design-2.html [R=301,L]
+
+    # Generic: /<slug>/ or /<slug>  ->  /<slug>.html, when that .html exists.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+    RewriteRule ^([A-Za-z0-9-]+)/?$ /$1.html [R=301,L]
+</IfModule>
+
+# ---- 3. Custom 404 --------------------------------------------------------
+ErrorDocument 404 /index.html
+
+# ---- 4. Compression -------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css \
+        application/javascript application/x-javascript application/json \
+        image/svg+xml
+</IfModule>
+
+# ---- 5. Caching headers for static assets ---------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                "access plus 1 month"
+    ExpiresByType application/javascript  "access plus 1 month"
+    ExpiresByType text/javascript         "access plus 1 month"
+    ExpiresByType image/png               "access plus 1 year"
+    ExpiresByType image/jpeg              "access plus 1 year"
+    ExpiresByType image/gif               "access plus 1 year"
+    ExpiresByType image/svg+xml           "access plus 1 year"
+    ExpiresByType image/webp              "access plus 1 year"
+    ExpiresByType image/x-icon            "access plus 1 year"
+    ExpiresByType font/woff               "access plus 1 year"
+    ExpiresByType font/woff2              "access plus 1 year"
+    ExpiresByType application/font-woff   "access plus 1 year"
+    # HTML stays short so content edits appear quickly.
+    ExpiresByType text/html               "access plus 1 hour"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
