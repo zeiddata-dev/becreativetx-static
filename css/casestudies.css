@@ -66,19 +66,18 @@
 /* ---------- mono -> color logo reveal ---------- */
 
 /* Converted logos carry one transparent, full-color mark. At rest it is fully
-   desaturated and lifted toward light grey (lower contrast, higher brightness)
-   so it reads as a quiet placeholder; on hover/focus/tap it snaps back to full
-   contrast with saturation pushed past 1 so the color arrival is unmistakable.
-   The button click (opens the work overlay) is untouched. */
+   desaturated — blacks stay black, colored areas drop to grey — and on
+   hover/focus/tap the color returns with saturation pushed past 1 so the
+   arrival is unmistakable. The button click (work overlay) is untouched. */
 .cs-logo-btn--swap img {
-  filter: grayscale(1) contrast(0.62) brightness(1.22) opacity(0.85);
+  filter: grayscale(1) contrast(1.04) opacity(0.92);
   transition: filter 320ms cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 .cs-logo-btn--swap:hover img,
 .cs-logo-btn--swap:focus-visible img,
 .cs-logo-btn--swap:active img {
-  filter: grayscale(0) contrast(1.06) saturate(1.25) brightness(1) opacity(1);
+  filter: grayscale(0) contrast(1.04) saturate(1.3) opacity(1);
 }
 
 /* ---------- "see more in the gallery" link under the logos ---------- */
