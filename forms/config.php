@@ -57,6 +57,16 @@ $ALLOWED_UPLOAD_EXT = array(
     'ai', 'eps', 'svg', 'psd', 'zip',
 );
 
+// Cap on the total size of everything already stored in /uploads. When the
+// directory is at or over this, new uploads are refused until old lead files
+// are cleared out (see the retention note in DEPLOY.md).
+define('UPLOAD_QUOTA_BYTES', 512 * 1024 * 1024);
+
+// Per-IP rate limit for upload attempts: at most this many stored files per
+// window. Tracked with tiny marker files, no database needed.
+define('UPLOAD_RATE_MAX', 10);
+define('UPLOAD_RATE_WINDOW', 3600); // seconds
+
 // ---------------------------------------------------------------------------
 // Helpers below this line. No configuration needed.
 // ---------------------------------------------------------------------------
@@ -138,6 +148,59 @@ function post_exceeded_limit() {
 }
 
 /**
+ * Total bytes currently stored in the uploads directory (top level only,
+ * which is the only place save_upload() writes).
+ */
+function upload_dir_bytes() {
+    $total = 0;
+    foreach ((array) @scandir(UPLOAD_DIR) as $entry) {
+        if ($entry === '.' || $entry === '..') {
+            continue;
+        }
+        $path = UPLOAD_DIR . '/' . $entry;
+        if (is_file($path)) {
+            $total += (int) filesize($path);
+        }
+    }
+    return $total;
+}
+
+/**
+ * Per-IP rate limit using marker files under uploads/.ratelimit/.
+ * Counts this IP's stored markers inside the window; expired markers from any
+ * IP are pruned on the way through. Records a new marker when allowed.
+ */
+function upload_rate_ok() {
+    $dir = UPLOAD_DIR . '/.ratelimit';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    $ip     = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+    $prefix = hash('sha256', $ip);
+    $now    = time();
+    $count  = 0;
+    foreach ((array) @scandir($dir) as $entry) {
+        if ($entry === '.' || $entry === '..') {
+            continue;
+        }
+        $path  = $dir . '/' . $entry;
+        $mtime = (int) @filemtime($path);
+        if ($now - $mtime > UPLOAD_RATE_WINDOW) {
+            @unlink($path);
+            continue;
+        }
+        if (strpos($entry, $prefix) === 0) {
+            $count++;
+        }
+    }
+    if ($count >= UPLOAD_RATE_MAX) {
+        return false;
+    }
+    @touch($dir . '/' . $prefix . '_' . $now . '_' . bin2hex(random_bytes(3)));
+    return true;
+}
+
+/**
  * Validate and store one uploaded file.
  *
  * @param array  $file  A single entry from $_FILES.
@@ -199,6 +262,17 @@ function save_upload($file, array $allowed_ext, &$error) {
     if (!is_dir(UPLOAD_DIR)) {
         @mkdir(UPLOAD_DIR, 0755, true);
     }
+
+    // Abuse guards: refuse before writing anything to disk.
+    if (!upload_rate_ok()) {
+        $error = 'Too many uploads from your connection. Please try again later.';
+        return null;
+    }
+    if (upload_dir_bytes() + (int) $file['size'] > UPLOAD_QUOTA_BYTES) {
+        $error = 'Our upload storage is temporarily full. Please email your file instead.';
+        return null;
+    }
+
     $dest = UPLOAD_DIR . '/' . $stored;
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) {
