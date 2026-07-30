@@ -1,0 +1,9 @@
+/* a11y.css
+   Restores a visible keyboard-focus outline that the Salient theme's CSS/JS
+   removes in several places (outline:0 / outline:none). Mouse and touch users
+   see no change; keyboard users get a visible outline again on focus. */
+
+:focus-visible {
+  outline: 2px solid #4169E1;
+  outline-offset: 2px;
+}

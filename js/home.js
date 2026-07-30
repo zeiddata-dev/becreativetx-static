@@ -49,7 +49,7 @@
     // cannot grab this node and re-stack the quotes.
     host.classList.remove('testimonial_slider');
     // Two copies back to back give a seamless loop.
-    host.innerHTML = '<div class="tm-scroller"><div class="tm-track">' + setHtml + setHtml + '</div></div>';
+    host.innerHTML = '<div class="tm-scroller" tabindex="0" aria-label="Customer testimonials"><div class="tm-track">' + setHtml + setHtml + '</div></div>';
 
     var scroller = host.querySelector('.tm-scroller');
     var track = host.querySelector('.tm-track');
