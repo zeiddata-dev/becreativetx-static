@@ -11,3 +11,6 @@ product-images/**/*.zip
 
 # Staged hosting copy built from .remember/deploy-manifest.txt (regenerate, don't edit)
 public_html/
+
+# Previous upload copy kept by scripts/build-public-html.mjs for rollback
+public_html_prev/

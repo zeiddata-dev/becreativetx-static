@@ -14,6 +14,58 @@ Files that make the forms and routing work:
 
 Work top to bottom. Do not skip Phase 0.
 
+Phases 0-5 describe the original WordPress cutover. For an ordinary content or
+code change to a site that is already live, use the incremental release below
+instead.
+
+---
+
+## Incremental release (site already live)
+
+Changes are made and reviewed in `../bctx-dev`, then promoted here. `bctx-live`
+is production: do not edit it directly.
+
+1. Promote the reviewed files from `bctx-dev` into this checkout, then confirm
+   `git status` lists only the files you meant to change.
+
+2. Re-stamp cache busters, then rebuild the upload copy. Order matters, so the
+   copied HTML and the copied assets agree on their `?v=` tokens:
+
+   ```
+   node scripts/stamp-logo-cache.mjs
+   node scripts/stamp-asset-cache.mjs
+   node scripts/build-public-html.mjs
+   ```
+
+   `build-public-html.mjs` validates every manifest entry before touching the
+   existing tree and keeps the previous copy as `public_html_prev/`. It refuses
+   to run if that rollback copy already exists, so clear it first.
+
+3. If a release adds a new file, add it to `.remember/deploy-manifest.txt`.
+   Anything not listed is silently left out of the upload: a page can link a
+   file that exists in the repo and still 404 in production. The manifest is the
+   authority on what ships.
+
+4. QA the generated tree before uploading, not the repo root:
+
+   ```
+   cd public_html
+   python -m http.server 5179 --bind 127.0.0.1
+   ```
+
+   Load `http://127.0.0.1:5179/index.html` with the network tab open. A real
+   failure is a same-origin path under `/css/`, `/js/`, or `/assets/` returning
+   404 or no response, which means the file is missing from the manifest.
+
+   Requests to `fonts.googleapis.com` and the two
+   `becreativetx.com/.../sr7.*.css` files are expected to appear as failures
+   here and are not: Slider Revolution lazy-loads those from the live origin, so
+   they cannot resolve against a local server. Judge them by hostname, not by
+   status.
+
+5. Upload `public_html/` to Hostinger. Roll back by restoring
+   `public_html_prev/`.
+
 ---
 
 ## Phase 0 - Backup (do this first)

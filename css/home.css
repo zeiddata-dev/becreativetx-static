@@ -124,7 +124,28 @@
   margin-top: 2px;
 }
 
+/* Reduced motion: js/home.js skips the auto-scroll, so the row would otherwise
+   read as a static block of cards with no hint the rest can be reached. The
+   scrollbar is hidden above for the animated case; put it back here so sideways
+   scrolling is visible and discoverable. */
 @media (prefers-reduced-motion: reduce) {
-  .tm-scroller { scroll-snap-type: x proximity; }
+  .tm-scroller {
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(65, 105, 225, 0.55) rgba(0, 0, 0, 0.07);
+  }
+
+  .tm-scroller::-webkit-scrollbar { display: block; height: 8px; }
+
+  .tm-scroller::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+  }
+
+  .tm-scroller::-webkit-scrollbar-thumb {
+    background: rgba(65, 105, 225, 0.55);
+    border-radius: 4px;
+  }
+
   .tm-track blockquote { scroll-snap-align: start; }
 }
