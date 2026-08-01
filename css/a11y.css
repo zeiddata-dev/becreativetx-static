@@ -7,3 +7,11 @@
   outline: 2px solid #4169E1;
   outline-offset: 2px;
 }
+
+/* Site-wide type consistency: the WPForms uploader hard-codes Helvetica Neue
+   for its drag-and-drop title, the one place a non-Open-Sans family survives.
+   This file is linked on every page, so the override lives here rather than
+   in a new stylesheet that would also need a manifest entry. */
+.wpforms-container-full .wpforms-field-file-upload .wpforms-uploader span.modern-title {
+  font-family: "Open Sans", Arial, sans-serif;
+}

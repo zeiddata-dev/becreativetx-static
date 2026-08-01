@@ -122,6 +122,9 @@
   border: 0;
   background: none;
   padding: 0;
+  /* Buttons don't inherit the page font; without this the captions fall back
+     to the UA default (Arial). */
+  font: inherit;
   width: 100%;
   cursor: pointer;
   display: block;
@@ -151,7 +154,7 @@
 .gal-tile .gal-cap {
   display: block;
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
   color: var(--gal-muted);
 }
@@ -159,7 +162,7 @@
 .gal-tile .gal-tag {
   display: block;
   margin-top: 4px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
