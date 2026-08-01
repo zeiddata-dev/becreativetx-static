@@ -2084,7 +2084,7 @@ body .dark .testimonial_slider[data-style="multiple_visible"][data-color*="accen
 			.testimonial_slider blockquote span, 
 			.testimonial_slider[data-style="minimal"] blockquote span:not(.title), 
 			.testimonial_slider[data-style="minimal"] blockquote,  
-			.testimonial_slider[data-style="minimal"] .controls { font-family: DM Sans; font-size:10px; line-height:15px; font-weight:400;  }    
+			.testimonial_slider[data-style="minimal"] .controls { font-family: "Open Sans", Arial, sans-serif; font-size:10px; line-height:15px; font-weight:400;  }    
     		@media only screen and (max-width: 1300px) and (min-width: 1000px) {
     			blockquote, 
           .testimonial_slider blockquote, 

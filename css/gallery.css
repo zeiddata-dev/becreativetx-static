@@ -1,7 +1,7 @@
 /* gallery.css
    The /gallery/ page: a filterable grid of all be creative work.
 
-   Matched to the live look (white, quiet, Open Sans body with Poppins
+   Matched to the live look (white, quiet, Open Sans throughout, body and
    headings). The single-image zoom reuses the case-studies overlay classes
    (cs-overlay / cs-ov-zoom / cs-zoom-*), so casestudies.css is loaded too and
    this file only styles the page: intro, filter bar, grid, and the apparel
@@ -28,11 +28,11 @@
 .gal-intro { max-width: 640px; margin-bottom: clamp(28px, 4vw, 44px); }
 
 .gal-intro h1 {
-  font-family: "Poppins", "Open Sans", sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(34px, 5vw, 52px);
   line-height: 1.05;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   margin: 0 0 14px;
 }
 
@@ -179,10 +179,11 @@
 }
 
 .gal-apparel-h {
-  font-family: "Poppins", "Open Sans", sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(22px, 3vw, 28px);
   line-height: 1.15;
+  letter-spacing: -0.015em;
   margin: 0 0 10px;
 }
 
