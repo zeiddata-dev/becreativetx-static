@@ -32,10 +32,11 @@
 }
 
 /* Display-size headings on this page (the promoted h1 and the WHAT THEY SAY
-   banner) get the same tightened tracking the gallery headings use, so Open
-   Sans holds up at display sizes. Sizes and weights are pinned inline in the
-   page and are not touched here. */
+   banner, now an h2) get the same tightened tracking the gallery headings
+   use, so Open Sans holds up at display sizes. Sizes and weights are pinned
+   inline in the page and are not touched here. */
 h1,
+h2,
 h5 {
   letter-spacing: -0.015em;
 }
